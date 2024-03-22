@@ -1,21 +1,18 @@
 # streaming-pkg-with-dab
 
-[![PyPI - Version](https://img.shields.io/pypi/v/streaming-pkg-with-dab.svg)](https://pypi.org/project/streaming-pkg-with-dab)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/streaming-pkg-with-dab.svg)](https://pypi.org/project/streaming-pkg-with-dab)
 
------
+## Dev setup
 
-**Table of Contents**
 
-- [Installation](#installation)
-- [License](#license)
+1. Ensure you have Python 3.10 and `hatch` installed.
+2. Create a new environment with `hatch`:
 
-## Installation
-
-```console
-pip install streaming-pkg-with-dab
+```
+hatch env create
 ```
 
-## License
+3. Activate the environment in VS Code:
 
-`streaming-pkg-with-dab` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+```
+hatch run python -c "import sys; print(sys.executable)" # set the output to VS Code interpreter
+```

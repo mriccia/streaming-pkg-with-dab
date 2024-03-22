@@ -8,7 +8,6 @@ dynamic = ["version"]
 description = ''
 readme = "README.md"
 requires-python = ">=3.7"
-license = "MIT"
 keywords = []
 authors = [
   { name = "renardeinside", email = "polarpersonal@gmail.com" },
@@ -24,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [] # only packages missing from DBR
 
 [project.urls]
 Documentation = "https://github.com/unknown/streaming-pkg-with-dab#readme"
@@ -38,6 +37,8 @@ path = "src/streaming_pkg_with_dab/__about__.py"
 dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
+  "pyspark",
+  "delta-spark"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"

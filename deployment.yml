@@ -1,0 +1,7 @@
+
+
+targets:
+  dev:
+    default: true
+  prod:
+    null

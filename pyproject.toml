@@ -23,12 +23,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = [] # only packages missing from DBR
-
-[project.urls]
-Documentation = "https://github.com/unknown/streaming-pkg-with-dab#readme"
-Issues = "https://github.com/unknown/streaming-pkg-with-dab/issues"
-Source = "https://github.com/unknown/streaming-pkg-with-dab"
+dependencies = [
+  "kafka-python",
+  "loguru",
+] # only add packages missing from DBR
 
 [tool.hatch.version]
 path = "src/streaming_pkg_with_dab/__about__.py"
@@ -38,7 +36,9 @@ dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
   "pyspark",
-  "delta-spark"
+  "delta-spark",
+  "testcontainers-kafka",
+  "pytest"
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
@@ -65,7 +65,7 @@ dependencies = [
 [tool.hatch.envs.lint.scripts]
 typing = "mypy --install-types --non-interactive {args:src/streaming_pkg_with_dab tests}"
 style = [
-  "ruff {args:.}",
+  "ruff check {args:.}",
   "black --check --diff {args:.}",
 ]
 fmt = [
@@ -156,3 +156,8 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
+
+[tool.pytest.ini_options]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+addopts = "-s -vv"

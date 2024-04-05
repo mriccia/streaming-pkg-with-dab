@@ -1,33 +1,23 @@
-from pyspark.sql import SparkSession, DataFrame
-from pyspark.sql.streaming.query import StreamingQuery
-from dataclasses import dataclass
+from kafka import KafkaProducer
+from loguru import logger
+
+from streaming_pkg_with_dab.common import Task
 
 
-@dataclass
-class Destination:
-    """Describes the destination"""
-
-    format: str = "console"
-
-
-class Task:
-
-    @property
-    def spark() -> SparkSession:
-        return SparkSession.builder.getOrCreate()
-
-    @property
-    def dest() -> Destination:
-        return Destination()
+class Writer(Task):
 
     def launch(self):
-        source = self.get_source()
-        query = self.pipe(source, self.dest)
-        query.awaitTermination()
+        self.pipe()
 
-    def get_source(self) -> spark.DataFrame:
-        return self.spark.readStream.format("rate").load()
+    def pipe(self):
+        bootstrap_server = self.get_bootstrap_server()
+        logger.info(f"Starting kafka producer to {bootstrap_server}")
+        producer = KafkaProducer(bootstrap_servers=self.get_bootstrap_server())
+        producer.send("foobar", b"some_message_bytes")
 
-    def pipe(self, source: DataFrame, dest: Destination) -> StreamingQuery:
-        writer = source.writeStream.format(dest.format).trigger(processingTime="10s")
-        return writer.start()
+    def get_bootstrap_server(self):
+        return "localhost:9092"
+
+
+def entrypoint():
+    Task().launch()

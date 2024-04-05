@@ -9,9 +9,7 @@ description = ''
 readme = "README.md"
 requires-python = ">=3.7"
 keywords = []
-authors = [
-  { name = "renardeinside", email = "polarpersonal@gmail.com" },
-]
+authors = [{ name = "renardeinside", email = "polarpersonal@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
@@ -23,10 +21,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = [
-  "kafka-python",
-  "loguru",
-] # only add packages missing from DBR
+dependencies = ["kafka-python", "loguru"] # only add packages missing from DBR
 
 [tool.hatch.version]
 path = "src/streaming_pkg_with_dab/__about__.py"
@@ -38,45 +33,25 @@ dependencies = [
   "pyspark",
   "delta-spark",
   "testcontainers-kafka",
-  "pytest"
+  "pytest",
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
-cov-report = [
-  "- coverage combine",
-  "coverage report",
-]
-cov = [
-  "test-cov",
-  "cov-report",
-]
+cov-report = ["- coverage combine", "coverage report"]
+cov = ["test-cov", "cov-report"]
 
 [[tool.hatch.envs.all.matrix]]
 python = ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
 [tool.hatch.envs.lint]
 detached = true
-dependencies = [
-  "black>=23.1.0",
-  "mypy>=1.0.0",
-  "ruff>=0.0.243",
-]
+dependencies = ["black>=23.1.0", "mypy>=1.0.0", "ruff>=0.0.243"]
 [tool.hatch.envs.lint.scripts]
 typing = "mypy --install-types --non-interactive {args:src/streaming_pkg_with_dab tests}"
-style = [
-  "ruff check {args:.}",
-  "black --check --diff {args:.}",
-]
-fmt = [
-  "black {args:.}",
-  "ruff --fix {args:.}",
-  "style",
-]
-all = [
-  "style",
-  "typing",
-]
+style = ["ruff check {args:.}", "black --check --diff {args:.}"]
+fmt = ["black {args:.}", "ruff check --fix {args:.}", "style"]
+all = ["style", "typing"]
 
 [tool.black]
 target-version = ["py37"]
@@ -86,6 +61,8 @@ skip-string-normalization = true
 [tool.ruff]
 target-version = "py37"
 line-length = 120
+
+[tool.ruff.lint]
 select = [
   "A",
   "ARG",
@@ -120,22 +97,28 @@ ignore = [
   # Allow boolean positional values in function calls, like `dict.get(... True)`
   "FBT003",
   # Ignore checks for possible passwords
-  "S105", "S106", "S107",
+  "S105",
+  "S106",
+  "S107",
   # Ignore complexity
-  "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+  "C901",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
 ]
 unfixable = [
   # Don't touch unused imports
   "F401",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["streaming_pkg_with_dab"]
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # Tests can use magic values, assertions, and relative imports
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
@@ -143,20 +126,17 @@ ban-relative-imports = "all"
 source_pkgs = ["streaming_pkg_with_dab", "tests"]
 branch = true
 parallel = true
-omit = [
-  "src/streaming_pkg_with_dab/__about__.py",
-]
+omit = ["src/streaming_pkg_with_dab/__about__.py"]
 
 [tool.coverage.paths]
-streaming_pkg_with_dab = ["src/streaming_pkg_with_dab", "*/streaming-pkg-with-dab/src/streaming_pkg_with_dab"]
+streaming_pkg_with_dab = [
+  "src/streaming_pkg_with_dab",
+  "*/streaming-pkg-with-dab/src/streaming_pkg_with_dab",
+]
 tests = ["tests", "*/streaming-pkg-with-dab/tests"]
 
 [tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.pytest.ini_options]
 log_format = "%(asctime)s %(levelname)s %(message)s"

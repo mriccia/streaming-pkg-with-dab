@@ -1,4 +1,5 @@
 from functools import cached_property
+
 from pyspark.sql import SparkSession
 
 from streaming_pkg_with_dab.common import Task

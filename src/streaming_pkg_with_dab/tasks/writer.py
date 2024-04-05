@@ -2,6 +2,7 @@ from kafka import KafkaProducer
 from loguru import logger
 
 from streaming_pkg_with_dab.common import Task
+from streaming_pkg_with_dab.config import DefaultConfig
 
 
 class Writer(Task):
@@ -10,13 +11,10 @@ class Writer(Task):
         self.pipe()
 
     def pipe(self):
-        bootstrap_server = self.get_bootstrap_server()
-        logger.info(f"Starting kafka producer to {bootstrap_server}")
-        producer = KafkaProducer(bootstrap_servers=self.get_bootstrap_server())
-
-    def get_bootstrap_server(self):
-        return "localhost:9092"
+        logger.info("Starting writer with config: {}", self.cfg.kafka)
+        producer = KafkaProducer(bootstrap_servers=self.cfg.kafka["bootstrap_servers"])
+        producer.send(self.cfg.kafka["topic"], value=b"test message")
 
 
 def entrypoint():
-    Task().launch()
+    Writer(cfg=DefaultConfig()).launch()

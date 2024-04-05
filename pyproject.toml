@@ -23,6 +23,9 @@ classifiers = [
 ]
 dependencies = ["kafka-python", "loguru"] # only add packages missing from DBR
 
+[project.scripts]
+writer = "streaming_pkg_with_dab.tasks.writer:entrypoint"
+
 [tool.hatch.version]
 path = "src/streaming_pkg_with_dab/__about__.py"
 

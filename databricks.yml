@@ -1,0 +1,38 @@
+bundle:
+  name: streaming-pkg-example
+
+targets:
+  dev:
+    default: true
+    workspace:
+      profile: streaming-pkg-demo
+
+artifacts:
+  default:
+    type: whl
+    build: hatch build -c -t wheel
+    path: .
+
+resources:
+  jobs:
+    writer:
+      name: "streaming-pkg-writer"
+      tasks:
+        - task_key: main
+
+          python_wheel_task:
+            package_name: streaming-pkg-with-dab
+            entry_point: writer
+
+          libraries:
+            - whl: dist/*.whl
+
+          new_cluster:
+            node_type_id: i3.xlarge
+            num_workers: 0
+            spark_version: 13.3.x-scala2.12
+            custom_tags:
+              "ResourceClass": "SingleNode"
+            spark_conf:
+              "spark.databricks.cluster.profile": "singleNode"
+              "spark.master": "local[*, 4]"

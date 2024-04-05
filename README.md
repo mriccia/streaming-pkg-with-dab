@@ -1,7 +1,8 @@
 # streaming-pkg-with-dab
 
+This is an example package with several Databricks jobs that demonstrate how to use a Python package with Databricks and Databricks Asset Bundles.
 
-## Dev setup
+## Dev setup on local machine
 
 
 1. Ensure you have Python 3.10 and `hatch` installed.
@@ -30,4 +31,16 @@ hatch run sync
 
 ```
 databricks auth login -p streaming-pkg-demo --host <workspace-url>
+```
+
+3. To deploy the jobs to the dev environment, run:
+
+```
+databricks bundle deploy -t dev
+```
+
+4. To deploy the jobs to the prod environment, run:
+
+```
+databricks bundle deploy -t prod
 ```

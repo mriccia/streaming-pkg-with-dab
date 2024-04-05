@@ -3,10 +3,16 @@ from dataclasses import dataclass, field
 
 
 @dataclass
+class KafkaInfo:
+    bootstrap_servers: str
+    topic: str
+
+
+@dataclass
 class Config(ABC):
-    kafka: dict[str, str]
+    kafka: KafkaInfo
 
 
 @dataclass
 class DefaultConfig(Config):
-    kafka: dict[str, str] = field(default_factory=lambda: {"bootstrap_servers": "localhost:9092", "topic": "events"})
+    kafka: KafkaInfo = field(default_factory=lambda: KafkaInfo(bootstrap_servers="localhost:9092", topic="test"))

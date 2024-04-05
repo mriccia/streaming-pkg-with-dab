@@ -12,8 +12,8 @@ class Writer(Task):
 
     def pipe(self):
         logger.info("Starting writer with config: {}", self.cfg.kafka)
-        producer = KafkaProducer(bootstrap_servers=self.cfg.kafka["bootstrap_servers"])
-        producer.send(self.cfg.kafka["topic"], value=b"test message")
+        producer = KafkaProducer(bootstrap_servers=self.cfg.kafka.bootstrap_servers)
+        producer.send(self.cfg.kafka.topic, value=b"test message")
 
 
 def entrypoint():

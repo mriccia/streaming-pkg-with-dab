@@ -37,6 +37,8 @@ dependencies = [
   "delta-spark",
   "testcontainers-kafka",
   "pytest",
+  "python-dotenv",
+  "pytest-cov",
 ]
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
@@ -126,17 +128,13 @@ ban-relative-imports = "all"
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
 [tool.coverage.run]
-source_pkgs = ["streaming_pkg_with_dab", "tests"]
+source_pkgs = ["streaming_pkg_with_dab"]
+source = ["src/streaming_pkg_with_dab"]
 branch = true
 parallel = true
-omit = ["src/streaming_pkg_with_dab/__about__.py"]
 
 [tool.coverage.paths]
-streaming_pkg_with_dab = [
-  "src/streaming_pkg_with_dab",
-  "*/streaming-pkg-with-dab/src/streaming_pkg_with_dab",
-]
-tests = ["tests", "*/streaming-pkg-with-dab/tests"]
+schorle = ["src/streaming_pkg_with_dab"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]

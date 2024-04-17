@@ -24,3 +24,5 @@ def test_writer(cfg: DefaultConfig):
     for i in range(10):
         msg = next(test_consumer)
         assert msg.value == f"Message {i}".encode()
+
+    test_consumer.close()

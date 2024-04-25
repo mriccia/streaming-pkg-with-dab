@@ -11,7 +11,7 @@ jobs:
     runs-on: codebuild-databricks-example-${{ github.run_id }}-${{ github.run_attempt }}
     environment: test
     steps:
-      - run: echo "Hello World!"
+      - run: echo "Hello World"
 #      - uses: actions/checkout@v4
 #      - uses: databricks/setup-cli@main
 #      - name: Set up Python

@@ -8,7 +8,7 @@ on:
 
 jobs:
   ci:
-    runs-on: codebuild-databricks-example-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-databricks-example-2-${{ github.run_id }}-${{ github.run_attempt }}
     environment: test
     steps:
       - uses: actions/checkout@v4
